@@ -1,5 +1,5 @@
 require 'discordrb'
-# require './active_record'
+require './active_record'
 
 bot_id = ENV['discord_id']
 bot_token = ENV['discord_token']
@@ -35,7 +35,7 @@ bot.message(with_text: '!teach') do |event|
 		else
 			response_phrase = teaching_event.message.content
 			teaching_event.respond("Response is #{response_phrase}. Call !#{trigger_phrase} to trigger.")
-			responses[trigger_phrase] = response_phrase
+			MemorizedResponse.create!(trigger: trigger_phrase, response: response_phrase)
 			stop = true
 		end
 
@@ -51,7 +51,7 @@ bot.message do |event|
 
 	if message.start_with?('!') && message != '!teach'
 		message = message[1..-1]
-		response = responses[message]
+		response = MemorizedResponse.find_by(trigger: message)&.response
 		event.respond(response) if response
 	end
 

@@ -39,6 +39,7 @@ GEM
     netrc (0.11.0)
     opus-ruby (1.0.1)
       ffi
+    pg (1.1.4)
     rbnacl (3.4.0)
       ffi
     rest-client (2.1.0)
@@ -64,6 +65,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord
   discordrb
+  pg
   sqlite3
 
 BUNDLED WITH

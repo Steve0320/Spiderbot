@@ -1,20 +1,8 @@
 # Basic ActiveRecord setup
-require 'sqlite3'
 require 'active_record'
 
-# Set up a database that resides in RAM
-ActiveRecord::Base.establish_connection(
-		adapter: 'sqlite3',
-		database: ':memory:'
-)
-
-# Set up database tables and columns
-ActiveRecord::Schema.define do
-	create_table :memorized_responses, force: true do |t|
-		t.string :trigger
-		t.string :response
-	end
-end
+db_config = YAML::load(File.open('db/database.yml'))
+ActiveRecord::Base.establish_connection(db_config)
 
 # Set up model classes
 class ApplicationRecord < ActiveRecord::Base
@@ -22,9 +10,8 @@ class ApplicationRecord < ActiveRecord::Base
 end
 
 # Define a user-taught response
+# CREATE TABLE memorized_responses(trigger text, response text)
 class MemorizedResponse < ApplicationRecord
-
-	self.table_name = 'memorized_responses'
 
 	validates :trigger, presence: true
 	validates :response, presence: true

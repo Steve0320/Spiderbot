@@ -1,0 +1,5 @@
+adapter: postgresql
+encoding: unicode
+database: spiderbot
+pool: 5
+username: postgres
